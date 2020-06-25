@@ -10,17 +10,13 @@ import SwiftUI
 
 struct ContentView: View {
 
-    let buttonText = [
-        ["AC", "±", "%", "÷"],
-        ["7", "8", "9", "⨉"],
-        ["4", "5", "6", "-"],
-        ["1", "2", "3", "+"],
-        ["0", ".", ".", "="]
+    let buttonText: [[CalculatorButton]] = [
+        [.ac, .plusMinus, .percentage, .devide],
+        [.seven, .eight, .nine, .multiply],
+        [.four, .five, .six, .minus],
+        [.one, .two, .three, .plus],
+        [.zero, .decimal, .equal]
     ]
-
-    var buttonSize: CGFloat {
-        return (UIScreen.main.bounds.width - 5 * 12) / 4
-    }
 
     var body: some View {
 
@@ -36,12 +32,17 @@ struct ContentView: View {
                 ForEach(buttonText, id: \.self) { row in
                     HStack {
                         ForEach(row, id: \.self) { element in
-                            Text(element)
-                                .font(.system(size: 32))
-                                .frame(width: self.buttonSize, height: self.buttonSize, alignment: .center)
+                            Button(action: {
+                                print(element.display)
+                            }, label: {
+                                Text(element.display)
+                                .font(.system(size: 36))
+                                .fontWeight(.semibold)
+                                .frame(width: element.width, height: element.height, alignment: .center)
                                 .foregroundColor(.white)
-                                .background(Color.yellow)
-                                .cornerRadius(self.buttonSize/2)
+                                .background(element.backgroundColor)
+                                .cornerRadius(element.height/2)
+                            })
                         }
                     }
                 }
